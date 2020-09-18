@@ -12,8 +12,13 @@ public class SimpleMathService implements MathService {
      * Например для (3, 1) метод должен вернуть 1;
      */
     @Override
-    public int compare(int value1, int value2) {
-        return -2;
+    public int compare(int value1, int value2)
+    {
+        if(value1 == value2)
+            return 0;
+        else if(value1 < value2)
+            return -1;
+        return 1;
     }
 
     /**
@@ -21,8 +26,9 @@ public class SimpleMathService implements MathService {
      * Например для списка (-1, 2) метод должен вернуть 2
      */
     @Override
-    public int maxFrom(int value1, int value2) {
-        return -1;
+    public int maxFrom(int value1, int value2)
+    {
+        return (value1 >= value2) ? value1 : value2;
     }
 
     /**
@@ -30,8 +36,13 @@ public class SimpleMathService implements MathService {
      * Например для списка {-1, -3, 4, 8, 5, 22, -5} метод должен вернуть 22
      */
     @Override
-    public int maxFrom(int[] values) {
-        return -1;
+    public int maxFrom(int[] values)
+    {
+        int max = values[0];
+        for (int val2: values)
+            max = maxFrom(max, val2);
+
+        return max;
     }
 
     /**
@@ -39,8 +50,14 @@ public class SimpleMathService implements MathService {
      * Например для списка {-1, -3, 4, 8, 5, 22, -5} метод должен вернуть 30
      */
     @Override
-    public int sum(int[] values) {
-        return -1;
+    public int sum(int[] values)
+    {
+        int sum = 0;
+        for (int e: values)
+        {
+            sum += e;
+        }
+        return sum;
     }
 
     /**
@@ -48,8 +65,15 @@ public class SimpleMathService implements MathService {
      * Например для списка {-1, -3, 4, 8, 5, 22, 17} метод должен вернуть {4, 8, 22}
      */
     @Override
-    public int[] getEvenDigits(int[] values) {
-        return new int[]{};
+    public int[] getEvenDigits(int[] values)
+    {
+        int[] even = new int[values.length];
+        int i = 0;
+        for (int e: values)
+            if(e % 2 == 0)
+                even[i++] = e;
+
+        return even;
     }
 
     /**
@@ -58,8 +82,12 @@ public class SimpleMathService implements MathService {
      * Факториал 0 должен быть равен 1.
      */
     @Override
-    public long calcFactorial(int initialVal) {
-        return -1L;
+    public long calcFactorial(int initialVal)
+    {
+        long res = 1;
+        for (int i = 2; i <= initialVal; i++)
+            res = res * i;
+        return res;
     }
 
     /**
