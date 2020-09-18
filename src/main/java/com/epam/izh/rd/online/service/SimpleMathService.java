@@ -101,8 +101,17 @@ public class SimpleMathService implements MathService {
      * Для числа 0 метод должен вернуть 0
      */
     @Override
-    public long calcFibonacci(int number) {
-        return -1L;
+    public long calcFibonacci(int number)
+    {
+        if (number == 0)
+            return 0;
+        long[] arr = new long[number + 1];
+        arr[0] = 0;
+        arr[1] = 1;
+
+        for (int i = 2; i <= number; i++)
+            arr[i] = arr[i - 1] + arr[i - 2];
+        return arr[number];
     }
 
     /**
@@ -110,8 +119,22 @@ public class SimpleMathService implements MathService {
      * Например для массива {-1, -3, 4, 8, 5, 22, -5} метод должен вернуть {-5, -3, -1, 4, 5, 8, 22}
      */
     @Override
-    public int[] sort(int[] values) {
-        return new int[]{};
+    public int[] sort(int[] values)
+    {
+        int temp;
+        for (int j = 0; j < values.length; j++)
+        {
+            for (int i = j + 1; i < values.length; i++)
+            {
+                if (values[i] < values[j])
+                {
+                    temp = values[i];
+                    values[i] = values[j];
+                    values[j] = temp;
+                }
+            }
+        }
+        return values;
     }
 
     /**
@@ -121,7 +144,8 @@ public class SimpleMathService implements MathService {
      * Например для числа 22 вернется false, а для числа 23 true.
      */
     @Override
-    public boolean isPrimary(int number) {
+    public boolean isPrimary(int number)
+    {
         return false;
     }
 
@@ -131,7 +155,12 @@ public class SimpleMathService implements MathService {
      * Например для массива {-1, -3, 4, 8, 5, 22, -5} метод вернет {-5, 22, 5, 8, 4, -3, -1}
      */
     @Override
-    public int[] reverseArray(int[] values) {
-        return new int[]{};
+    public int[] reverseArray(int[] values)
+    {
+        int[] reverseArr = new int[values.length];
+        for (int i = values.length - 1, j = 0; i >= 0; i--, j++)
+            reverseArr[j] = values[i];
+
+        return reverseArr;
     }
 }
