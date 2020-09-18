@@ -1,5 +1,7 @@
 package com.epam.izh.rd.online.service;
 
+import java.util.Arrays;
+
 public class SimpleMathService implements MathService {
 
     /**
@@ -12,8 +14,13 @@ public class SimpleMathService implements MathService {
      * Например для (3, 1) метод должен вернуть 1;
      */
     @Override
-    public int compare(int value1, int value2) {
-        return -2;
+    public int compare(int value1, int value2)
+    {
+        if(value1 == value2)
+            return 0;
+        else if(value1 < value2)
+            return -1;
+        return 1;
     }
 
     /**
@@ -21,8 +28,9 @@ public class SimpleMathService implements MathService {
      * Например для списка (-1, 2) метод должен вернуть 2
      */
     @Override
-    public int maxFrom(int value1, int value2) {
-        return -1;
+    public int maxFrom(int value1, int value2)
+    {
+        return (value1 >= value2) ? value1 : value2;
     }
 
     /**
@@ -30,8 +38,13 @@ public class SimpleMathService implements MathService {
      * Например для списка {-1, -3, 4, 8, 5, 22, -5} метод должен вернуть 22
      */
     @Override
-    public int maxFrom(int[] values) {
-        return -1;
+    public int maxFrom(int[] values)
+    {
+        int max = values[0];
+        for (int val2: values)
+            max = maxFrom(max, val2);
+
+        return max;
     }
 
     /**
@@ -39,8 +52,12 @@ public class SimpleMathService implements MathService {
      * Например для списка {-1, -3, 4, 8, 5, 22, -5} метод должен вернуть 30
      */
     @Override
-    public int sum(int[] values) {
-        return -1;
+    public int sum(int[] values)
+    {
+        int sum = 0;
+        for (int e: values)
+            sum += e;
+        return sum;
     }
 
     /**
@@ -48,8 +65,17 @@ public class SimpleMathService implements MathService {
      * Например для списка {-1, -3, 4, 8, 5, 22, 17} метод должен вернуть {4, 8, 22}
      */
     @Override
-    public int[] getEvenDigits(int[] values) {
-        return new int[]{};
+    public int[] getEvenDigits(int[] values)
+    {
+        int[] even = new int[values.length];
+        int i = 0, count = 0;
+        for (int e: values)
+            if(e % 2 == 0) {
+                even[i++] = e;
+                count++;
+            }
+
+        return Arrays.copyOf(even, count);
     }
 
     /**
@@ -58,8 +84,12 @@ public class SimpleMathService implements MathService {
      * Факториал 0 должен быть равен 1.
      */
     @Override
-    public long calcFactorial(int initialVal) {
-        return -1L;
+    public long calcFactorial(int initialVal)
+    {
+        long res = 1;
+        for (int i = 2; i <= initialVal; i++)
+            res = res * i;
+        return res;
     }
 
     /**
@@ -73,8 +103,17 @@ public class SimpleMathService implements MathService {
      * Для числа 0 метод должен вернуть 0
      */
     @Override
-    public long calcFibonacci(int number) {
-        return -1L;
+    public long calcFibonacci(int number)
+    {
+        if (number == 0)
+            return 0;
+        long[] arr = new long[number + 1];
+        arr[0] = 0;
+        arr[1] = 1;
+
+        for (int i = 2; i <= number; i++)
+            arr[i] = arr[i - 1] + arr[i - 2];
+        return arr[number];
     }
 
     /**
@@ -82,8 +121,22 @@ public class SimpleMathService implements MathService {
      * Например для массива {-1, -3, 4, 8, 5, 22, -5} метод должен вернуть {-5, -3, -1, 4, 5, 8, 22}
      */
     @Override
-    public int[] sort(int[] values) {
-        return new int[]{};
+    public int[] sort(int[] values)
+    {
+        int temp;
+        for (int j = 0; j < values.length; j++)
+        {
+            for (int i = j + 1; i < values.length; i++)
+            {
+                if (values[i] < values[j])
+                {
+                    temp = values[i];
+                    values[i] = values[j];
+                    values[j] = temp;
+                }
+            }
+        }
+        return values;
     }
 
     /**
@@ -93,8 +146,18 @@ public class SimpleMathService implements MathService {
      * Например для числа 22 вернется false, а для числа 23 true.
      */
     @Override
-    public boolean isPrimary(int number) {
-        return false;
+    public boolean isPrimary(int number)
+    {
+        if (number <= 1)  return false;
+        if (number <= 3)  return true;
+
+        if (number % 2 == 0 || number % 3 == 0) return false;
+
+        for (int i = 5; i * i <= number; i = i+6)
+            if (number % i == 0 || number % (i + 2) == 0)
+                return false;
+
+        return true;
     }
 
     /**
@@ -103,7 +166,12 @@ public class SimpleMathService implements MathService {
      * Например для массива {-1, -3, 4, 8, 5, 22, -5} метод вернет {-5, 22, 5, 8, 4, -3, -1}
      */
     @Override
-    public int[] reverseArray(int[] values) {
-        return new int[]{};
+    public int[] reverseArray(int[] values)
+    {
+        int[] reverseArr = new int[values.length];
+        for (int i = values.length - 1, j = 0; i >= 0; i--, j++)
+            reverseArr[j] = values[i];
+
+        return reverseArr;
     }
 }
