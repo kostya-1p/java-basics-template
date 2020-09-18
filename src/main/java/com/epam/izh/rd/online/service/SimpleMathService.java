@@ -1,5 +1,7 @@
 package com.epam.izh.rd.online.service;
 
+import java.util.Arrays;
+
 public class SimpleMathService implements MathService {
 
     /**
@@ -68,12 +70,14 @@ public class SimpleMathService implements MathService {
     public int[] getEvenDigits(int[] values)
     {
         int[] even = new int[values.length];
-        int i = 0;
+        int i = 0, count = 0;
         for (int e: values)
-            if(e % 2 == 0)
+            if(e % 2 == 0) {
                 even[i++] = e;
+                count++;
+            }
 
-        return even;
+        return Arrays.copyOf(even, count);
     }
 
     /**
